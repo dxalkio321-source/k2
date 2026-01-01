@@ -20,17 +20,16 @@ body {
     text-align: center;
 }
 
-/* 🔹 กล่องจิ๊กซอว์ (ปรับให้สูงขึ้น) */
+/* 🔹 ขนาดจิ๊กซอว์ (ยาวขึ้น) */
 #puzzle {
-    width: 240px;
-    aspect-ratio: 3 / 4;   /* <<<<<< จุดสำคัญ */
+    width: 260px;
+    aspect-ratio: 3 / 5; /* << ทำให้รูปสูง */
     margin: 20px auto;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: 4px;
 }
 
-/* 🔹 ชิ้นจิ๊กซอว์ */
 .tile {
     background-image: url("love.jpg");
     background-size: cover;
@@ -39,13 +38,10 @@ body {
     cursor: pointer;
 }
 
-/* ช่องว่าง */
 .empty {
     background: none;
-    cursor: default;
 }
 
-/* ข้อความหลังต่อเสร็จ */
 #finalText {
     display: none;
     font-size: 18px;
@@ -100,7 +96,7 @@ function startGame() {
 }
 
 function initPuzzle() {
-    tiles = [...Array(8).keys(), null];
+    tiles = [...Array(15).keys(), null]; // 4x4
     shuffle(tiles);
     draw();
 }
@@ -117,7 +113,7 @@ function draw() {
         } else {
             tile.className = "tile";
             tile.style.backgroundPosition =
-                `${(value % 3) * 50}% ${Math.floor(value / 3) * 50}%`;
+                `${(value % 4) * 33.33}% ${Math.floor(value / 4) * 25}%`;
             tile.onclick = () => move(index);
         }
 
@@ -127,7 +123,12 @@ function draw() {
 
 function move(index) {
     const empty = tiles.indexOf(null);
-    const valid = [empty - 1, empty + 1, empty - 3, empty + 3];
+    const valid = [
+        empty - 1,
+        empty + 1,
+        empty - 4,
+        empty + 4
+    ];
 
     if (valid.includes(index)) {
         [tiles[index], tiles[empty]] = [tiles[empty], tiles[index]];
@@ -140,7 +141,7 @@ function move(index) {
 }
 
 function checkWin() {
-    for (let i = 0; i < 8; i++) {
+    for (let i = 0; i < 15; i++) {
         if (tiles[i] !== i) return false;
     }
     return true;
