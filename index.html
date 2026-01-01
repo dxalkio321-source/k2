@@ -20,37 +20,52 @@ body {
     text-align: center;
 }
 
+/* 🔹 กล่องจิ๊กซอว์ (ปรับให้สูงขึ้น) */
 #puzzle {
     width: 240px;
-    height: 240px;
+    aspect-ratio: 3 / 4;   /* <<<<<< จุดสำคัญ */
+    margin: 20px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 3px;
-    margin: 20px auto;
+    gap: 4px;
 }
 
+/* 🔹 ชิ้นจิ๊กซอว์ */
 .tile {
     background-image: url("love.jpg");
-    background-size: 300% 300%;
+    background-size: cover;
+    background-position: center;
     border-radius: 6px;
     cursor: pointer;
 }
 
+/* ช่องว่าง */
 .empty {
     background: none;
     cursor: default;
 }
 
+/* ข้อความหลังต่อเสร็จ */
 #finalText {
     display: none;
     font-size: 18px;
     margin-top: 20px;
+    line-height: 1.8;
     animation: pop 0.8s ease forwards;
 }
 
 @keyframes pop {
     from {opacity:0; transform:scale(0.8);}
     to {opacity:1; transform:scale(1);}
+}
+
+button {
+    padding: 14px 28px;
+    border-radius: 30px;
+    border: none;
+    background: #000;
+    color: white;
+    font-size: 16px;
 }
 </style>
 </head>
@@ -65,6 +80,7 @@ body {
 
 <div id="game" style="display:none;">
     <div id="puzzle"></div>
+
     <div id="finalText">
         ขอบคุณที่อยู่ข้าง ๆ กันเสมอ<br>
         ข้ามปีนี้และทุกปีต่อจากนี้<br>
@@ -75,7 +91,6 @@ body {
 </div>
 
 <script>
-const size = 3;
 let tiles = [];
 
 function startGame() {
@@ -94,16 +109,16 @@ function draw() {
     const puzzle = document.getElementById("puzzle");
     puzzle.innerHTML = "";
 
-    tiles.forEach((val, i) => {
+    tiles.forEach((value, index) => {
         const tile = document.createElement("div");
 
-        if (val === null) {
+        if (value === null) {
             tile.className = "tile empty";
         } else {
             tile.className = "tile";
             tile.style.backgroundPosition =
-                `${(val % 3) * 50}% ${Math.floor(val / 3) * 50}%`;
-            tile.onclick = () => move(i);
+                `${(value % 3) * 50}% ${Math.floor(value / 3) * 50}%`;
+            tile.onclick = () => move(index);
         }
 
         puzzle.appendChild(tile);
@@ -112,15 +127,9 @@ function draw() {
 
 function move(index) {
     const empty = tiles.indexOf(null);
+    const valid = [empty - 1, empty + 1, empty - 3, empty + 3];
 
-    const validMoves = [
-        empty - 1,
-        empty + 1,
-        empty - 3,
-        empty + 3
-    ];
-
-    if (validMoves.includes(index)) {
+    if (valid.includes(index)) {
         [tiles[index], tiles[empty]] = [tiles[empty], tiles[index]];
         draw();
 
