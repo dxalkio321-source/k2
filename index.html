@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ของขวัญเล็ก ๆ 🤍</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: "Prompt", sans-serif;
+    background: #eaf4ff;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    text-align: center;
+}
+
+button {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 30px;
+    background: #000;
+    color: white;
+    font-size: 16px;
+}
+
+#puzzle {
+    width: 240px;
+    height: 240px;
+    margin: 20px auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+}
+
+.tile {
+    background-image: url("love.jpg");
+    background-size: 300% 300%;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+
+.empty {
+    background: transparent;
+}
+
+#finalText {
+    display: none;
+    font-size: 18px;
+    line-height: 1.8;
+    margin-top: 20px;
+    animation: pop 0.8s ease forwards;
+}
+
+@keyframes pop {
+    from {opacity: 0; transform: scale(0.7);}
+    to {opacity: 1; transform: scale(1);}
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<div id="start">
+    <h2>ของขวัญเล็ก ๆ 🤍</h2>
+    <button onclick="startGame()">เปิดของขวัญ 🎁</button>
+</div>
+
+<div id="game" style="display:none;">
+    <div id="puzzle"></div>
+    <div id="finalText">
+        ขอบคุณที่อยู่ข้าง ๆ กันเสมอ<br>
+        ข้ามปีนี้และทุกปีต่อจากนี้<br>
+        ขอให้เราได้อยู่ด้วยกันแบบนี้นะ 🤍
+    </div>
+</div>
+
+</div>
+
+<script>
+const size = 3;
+let tiles = [];
+let emptyIndex = 8;
+
+function startGame() {
+    document.getElementById("start").style.display = "none";
+    document.getElementById("game").style.display = "block";
+    createPuzzle();
+}
+
+function createPuzzle() {
+    const puzzle = document.getElementById("puzzle");
+    puzzle.innerHTML = "";
+
+    tiles = [...Array(8).keys(), null];
+    shuffle(tiles);
+
+    tiles.forEach((val, i) => {
+        const tile = document.createElement("div");
+
+        if (val === null) {
+            tile.className = "tile empty";
+        } else {
+            tile.className = "tile";
+            tile.style.backgroundPosition =
+                `${(val % 3) * 50}% ${Math.floor(val / 3) * 50}%`;
+            tile.onclick = () => moveTile(i);
+        }
+
+        puzzle.appendChild(tile);
+    });
+
+    emptyIndex = tiles.indexOf(null);
+}
+
+function moveTile(index) {
+    const diff = Math.abs(index - emptyIndex);
+
+    if ([1,3].includes(diff)) {
+        [tiles[index], tiles[emptyIndex]] =
+        [tiles[emptyIndex], tiles[index]];
+
+        createPuzzle();
+
+        if (checkWin()) {
+            setTimeout(() => {
+                document.getElementById("finalText").style.display = "block";
+            }, 500);
+        }
+    }
+}
+
+function checkWin() {
+    for (let i = 0; i < 8; i++) {
+        if (tiles[i] !== i) return false;
+    }
+    return true;
+}
+
+function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+}
+</script>
+</body>
+</html>
