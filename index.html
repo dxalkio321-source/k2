@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>กดเลย 🤍</title>
+<title>ของขวัญเล็ก ๆ 🤍</title>
 
 <style>
 body {
@@ -20,21 +20,21 @@ body {
     text-align: center;
 }
 
-/* กล่องจิ๊กซอว์ */
+/* 🔹 กล่องจิ๊กซอว์ (ปรับให้สูงขึ้น) */
 #puzzle {
-    width: 260px;
-    aspect-ratio: 3 / 5;
+    width: 240px;
+    aspect-ratio: 3 / 4;   /* <<<<<< จุดสำคัญ */
     margin: 20px auto;
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 4px;
 }
 
-/* ชิ้นจิ๊กซอว์ */
+/* 🔹 ชิ้นจิ๊กซอว์ */
 .tile {
     background-image: url("love.jpg");
-    background-size: 400% 400%;
-    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -45,7 +45,7 @@ body {
     cursor: default;
 }
 
-/* ข้อความตอนชนะ */
+/* ข้อความหลังต่อเสร็จ */
 #finalText {
     display: none;
     font-size: 18px;
@@ -82,9 +82,9 @@ button {
     <div id="puzzle"></div>
 
     <div id="finalText">
-        ไอ<br>
-        อ้วน<br>
-        🤍
+        ขอบคุณที่อยู่ข้าง ๆ กันเสมอ<br>
+        ข้ามปีนี้และทุกปีต่อจากนี้<br>
+        ขอให้เราได้อยู่ด้วยกันแบบนี้นะ 🤍
     </div>
 </div>
 
@@ -100,7 +100,7 @@ function startGame() {
 }
 
 function initPuzzle() {
-    tiles = [...Array(15).keys(), null]; // 4x4
+    tiles = [...Array(8).keys(), null];
     shuffle(tiles);
     draw();
 }
@@ -117,7 +117,7 @@ function draw() {
         } else {
             tile.className = "tile";
             tile.style.backgroundPosition =
-                `${(value % 4) * 33.33}% ${Math.floor(value / 4) * 25}%`;
+                `${(value % 3) * 50}% ${Math.floor(value / 3) * 50}%`;
             tile.onclick = () => move(index);
         }
 
@@ -127,12 +127,7 @@ function draw() {
 
 function move(index) {
     const empty = tiles.indexOf(null);
-    const valid = [
-        empty - 1,
-        empty + 1,
-        empty - 4,
-        empty + 4
-    ];
+    const valid = [empty - 1, empty + 1, empty - 3, empty + 3];
 
     if (valid.includes(index)) {
         [tiles[index], tiles[empty]] = [tiles[empty], tiles[index]];
@@ -145,7 +140,7 @@ function move(index) {
 }
 
 function checkWin() {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 8; i++) {
         if (tiles[i] !== i) return false;
     }
     return true;
