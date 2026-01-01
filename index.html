@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ของขวัญเล็ก ๆ 🤍</title>
+<title>กดเลย 🤍</title>
 
 <style>
 body {
@@ -20,28 +20,32 @@ body {
     text-align: center;
 }
 
-/* 🔹 ขนาดจิ๊กซอว์ (ยาวขึ้น) */
+/* กล่องจิ๊กซอว์ */
 #puzzle {
     width: 260px;
-    aspect-ratio: 3 / 5; /* << ทำให้รูปสูง */
+    aspect-ratio: 3 / 5;
     margin: 20px auto;
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 4px;
 }
 
+/* ชิ้นจิ๊กซอว์ */
 .tile {
     background-image: url("love.jpg");
-    background-size: cover;
-    background-position: center;
+    background-size: 400% 400%;
+    background-repeat: no-repeat;
     border-radius: 6px;
     cursor: pointer;
 }
 
+/* ช่องว่าง */
 .empty {
     background: none;
+    cursor: default;
 }
 
+/* ข้อความตอนชนะ */
 #finalText {
     display: none;
     font-size: 18px;
@@ -78,9 +82,9 @@ button {
     <div id="puzzle"></div>
 
     <div id="finalText">
-        ขอบคุณที่อยู่ข้าง ๆ กันเสมอ<br>
-        ข้ามปีนี้และทุกปีต่อจากนี้<br>
-        ขอให้เราได้อยู่ด้วยกันแบบนี้นะ 🤍
+        ไอ<br>
+        อ้วน<br>
+        🤍
     </div>
 </div>
 
