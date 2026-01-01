@@ -20,21 +20,21 @@ body {
     text-align: center;
 }
 
-/* 🔹 กล่องจิ๊กซอว์ (ปรับให้สูงขึ้น) */
+/* กล่องจิ๊กซอว์ */
 #puzzle {
     width: 240px;
-    aspect-ratio: 3 / 4;   /* <<<<<< จุดสำคัญ */
+    aspect-ratio: 3 / 4;
     margin: 20px auto;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 4px;
 }
 
-/* 🔹 ชิ้นจิ๊กซอว์ */
+/* ชิ้นจิ๊กซอว์ */
 .tile {
     background-image: url("love.jpg");
-    background-size: cover;
-    background-position: center;
+    background-size: 300% 300%; /* สำคัญมาก */
+    background-repeat: no-repeat;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -42,10 +42,9 @@ body {
 /* ช่องว่าง */
 .empty {
     background: none;
-    cursor: default;
 }
 
-/* ข้อความหลังต่อเสร็จ */
+/* ข้อความตอนชนะ */
 #finalText {
     display: none;
     font-size: 18px;
